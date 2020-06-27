@@ -9,19 +9,17 @@ public class TabController : MonoBehaviour
     //public reference to ui object
     public Text titleText;
     public string titleTextValue;
-    public Text mainResource;
-    public string mainResourceName;
+    public Text mainResourceText;
+    public string mainResourceTextValue;
     
-    public Text mainResourceAmount;
+    public Text mainResourceAmountText;
 
     // Start is called before the first frame update
     void Start()
     {
         titleText.text = titleTextValue;
-        mainResource.text = mainResourceName + ": ";
-        mainResourceAmount.text = GetResource(mainResourceName).ToString();
-        //gameController = new GameController();
-
+        mainResourceText.text = mainResourceTextValue + ": ";
+        mainResourceAmountText.text = GetResource(mainResourceTextValue).ToString();
     }
 
     // Update is called once per frame
@@ -30,8 +28,8 @@ public class TabController : MonoBehaviour
         //get data from gameController
 
         //set ui object string text
-mainResource.text = mainResourceName + ": ";
-        mainResourceAmount.text = GetResource(mainResourceName).ToString();
+        mainResourceText.text = mainResourceTextValue + ": ";
+        mainResourceAmountText.text = GetResource(mainResourceTextValue).ToString();
     }
 
     float GetResource(string resourceName)

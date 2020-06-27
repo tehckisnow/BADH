@@ -190,7 +190,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 0
+  m_Text: -1
 --- !u!222 &113441384
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -776,6 +776,7 @@ Transform:
   m_Children:
   - {fileID: 1808245241}
   - {fileID: 1814259068}
+  - {fileID: 2066408668}
   m_Father: {fileID: 681299388}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1036,7 +1037,6 @@ Transform:
   m_LocalScale: {x: 0.7992009, y: 0.5161444, z: 1}
   m_Children:
   - {fileID: 1640916165}
-  - {fileID: 2066408668}
   m_Father: {fileID: 1174447405}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1118,9 +1118,9 @@ MonoBehaviour:
   gameController: {fileID: 704304417}
   titleText: {fileID: 633111324}
   titleTextValue: The Barn
-  mainResource: {fileID: 709134869}
-  mainResourceName: 'Clout:'
-  mainResourceAmount: {fileID: 113441383}
+  mainResourceText: {fileID: 709134869}
+  mainResourceTextValue: clout
+  mainResourceAmountText: {fileID: 113441383}
 --- !u!1 &2066408667
 GameObject:
   m_ObjectHideFlags: 0
@@ -1146,11 +1146,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2066408667}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -2.88, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0.6193735, z: -1}
+  m_LocalScale: {x: 0.79920083, y: 0.5161444, z: 1}
   m_Children: []
-  m_Father: {fileID: 1808245241}
-  m_RootOrder: 1
+  m_Father: {fileID: 1174447405}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2066408669
 SpriteRenderer:
