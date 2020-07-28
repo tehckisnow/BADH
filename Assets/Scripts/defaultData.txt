@@ -1,0 +1,83 @@
+{
+    "Resources":
+    {
+        "acreage": {
+            "display": "Acreage",
+            "value": 1,
+        },
+        "clout": {
+            "display": "Clout",
+            "value": 0,
+        },
+        "money": {
+            "display": "Money",
+            "value": 0,
+        }
+    },
+
+    "Tools":
+    {
+        {
+            "display": "Fist",
+            "rof": 3,
+            "resource": 1,
+            "Upgrades": 
+            {
+                {
+                    "display": "brass knuckles",
+                    "rof": 1,
+                    "resource": 1,
+                    "acquired": false,
+                    "available": true,
+                },
+
+            }
+        },
+        {
+            "display": "baseball bat",
+            "rof": 1,
+            "resource": 3,
+            "Upgrades": 
+            {
+                {
+                    "display": "nails",
+                    "rof": 1,
+                    "resource": 1,
+                    "acquired": false,
+                    "available": true,
+                },
+                {
+                    "display": "cork",
+                    "rof": -.25,
+                    "resource": 0,
+                    "acquired": false,
+                    "available": true,
+                },
+            },
+        },
+        {
+            "display": "Punch Gun",
+            "rof": 5,
+            "resource": 5,
+            "Upgrades": 
+            {
+                {
+                    "display": "Heavier Spring",
+                    "rof": 1,
+                    "resource": 1,
+                    "acquired": false,
+                    "available": true,
+                },
+                {
+                    "display": "Bigger Glove",
+                    "rof": 1,
+                    "resource": 1,
+                    "acquired": false,
+                    "available": true,
+                },
+            }
+        },
+    },
+
+
+}
