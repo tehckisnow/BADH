@@ -73,3 +73,4 @@ crashlytics-build.properties
 /Assembly-CSharp.csproj
 /Assembly-CSharp-firstpass.csproj
 /.vscode/launch.json
+/Packages/packages-lock.json
