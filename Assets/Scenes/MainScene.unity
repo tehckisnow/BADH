@@ -684,7 +684,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   barnTab: {fileID: 1863764454}
-  defaultData: {fileID: 4900000, guid: 68c1b5acc4387f249bd98049985a7a23, type: 3}
+  defaultDataFile: {fileID: 4900000, guid: 68c1b5acc4387f249bd98049985a7a23, type: 3}
 --- !u!4 &704304418
 Transform:
   m_ObjectHideFlags: 0
