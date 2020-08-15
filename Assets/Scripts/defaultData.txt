@@ -17,13 +17,13 @@
 
     "Tools":
     {
-        {
+        "fist":{
             "display": "Fist",
             "rof": 3,
             "resource": 1,
             "Upgrades": 
             {
-                {
+               "brassknuckles": {
                     "display": "brass knuckles",
                     "rof": 1,
                     "resource": 1,
@@ -33,20 +33,20 @@
 
             }
         },
-        {
+        "baseballbat":{
             "display": "baseball bat",
             "rof": 1,
             "resource": 3,
             "Upgrades": 
             {
-                {
+                "nails":{
                     "display": "nails",
                     "rof": 1,
                     "resource": 1,
                     "acquired": false,
                     "available": true,
                 },
-                {
+                "cork": {
                     "display": "cork",
                     "rof": -.25,
                     "resource": 0,
@@ -55,20 +55,20 @@
                 },
             },
         },
-        {
+        "punchgun":{
             "display": "Punch Gun",
             "rof": 5,
             "resource": 5,
             "Upgrades": 
             {
-                {
+                "heavierspring":{
                     "display": "Heavier Spring",
                     "rof": 1,
                     "resource": 1,
                     "acquired": false,
                     "available": true,
                 },
-                {
+                "biggerglove":{
                     "display": "Bigger Glove",
                     "rof": 1,
                     "resource": 1,
