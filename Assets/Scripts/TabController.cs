@@ -10,7 +10,11 @@ public class TabController : MonoBehaviour
     public Text titleText;
     public string titleTextValue;
     public Text mainResourceText;
+    public string mainResourceID;
     public string mainResourceTextValue;
+    public Animator buttonAnimator;
+    public Tool currentTool;
+    public AudioSource sfx;
     
     public Text mainResourceAmountText;
 
@@ -19,7 +23,7 @@ public class TabController : MonoBehaviour
     {
         titleText.text = titleTextValue;
         mainResourceText.text = mainResourceTextValue + ": ";
-        mainResourceAmountText.text = GetResource(mainResourceTextValue).ToString();
+        mainResourceAmountText.text = GetResource(mainResourceID).ToString();
     }
 
     // Update is called once per frame
@@ -29,7 +33,7 @@ public class TabController : MonoBehaviour
 
         //set ui object string text
         mainResourceText.text = mainResourceTextValue + ": ";
-        mainResourceAmountText.text = GetResource(mainResourceTextValue).ToString();
+        mainResourceAmountText.text = GetResource(mainResourceID).ToString();
     }
 
     float GetResource(string resourceName)
@@ -37,4 +41,17 @@ public class TabController : MonoBehaviour
         return gameController.GetResource(resourceName);
     }
 
+    public void TapMainButton()
+    {
+        //buttonAnimator.SetBool("mainButtonReady", false);
+        buttonAnimator.Play("beatHorse");
+        sfx.Play();
+        gameController.ModResource(mainResourceID, currentTool.damage);
+        Debug.Log(gameController.GetResource("clout"));
+    }
+
+    private void SetTool(Tool tool)
+    {
+        currentTool = tool;
+    }
 }

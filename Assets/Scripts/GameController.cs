@@ -36,6 +36,11 @@ public class GameController : MonoBehaviour
         jsonNode["Resources"][resourceName]["value"] = newValue;
     }
 
+    public void ModResource(string resourceName, float newValue)
+    {
+        jsonNode["Resources"][resourceName]["value"] += newValue;
+    }
+
 private void playerDbCheckandLoad()
 {
     var fileName = Path.Combine(Application.persistentDataPath, "BADHdb.json");
