@@ -60,7 +60,13 @@ private void playerDbCheckandLoad()
         playerReader.Close();
 
         var defaultJsonNode = SimpleJSON.JSON.Parse(defaultDataFile.text);
+        
+        var defaultVersionNum = defaultJsonNode["version"];
+        var playerVersionNum = jsonNode["version"];
+        if(defaultVersionNum != playerVersionNum){
         jsonNode = mergeDefaultData(defaultJsonNode, jsonNode);
+        jsonNode = deleteExtraneousPlayerData(defaultJsonNode, jsonNode);
+        }
         Debug.Log(jsonNode);  
 }
 
@@ -72,6 +78,20 @@ public static JSONNode mergeDefaultData(JSONNode defaultJson, JSONNode playerJso
             playerJson.Add(node.Key, node.Value);
         }else{
             mergeDefaultData(node.Value, playerJson[node.Key]); 
+        }
+    }
+
+    return playerJson;
+}
+
+public static JSONNode deleteExtraneousPlayerData(JSONNode defaultJson, JSONNode playerJson) 
+{
+
+    foreach(var node in playerJson) {
+        if(!defaultJson.HasKey(node.Key)){
+            playerJson.Remove(node.Key);
+        }else{
+            deleteExtraneousPlayerData(node.Value, playerJson[node.Key]); 
         }
     }
 
