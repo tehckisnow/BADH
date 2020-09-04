@@ -1,4 +1,7 @@
-﻿using System.IO;
+﻿using System.Security.Cryptography;
+using System.ComponentModel.Design;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,11 +11,12 @@ using SimpleJSON;
 
 public class GameController : MonoBehaviour
 {
-
+    public bool scorchedEarth;
     public GameObject barnTab;
     public TextAsset defaultDataFile;
 
     private JSONNode jsonNode;
+    //private List<Tab> tabs;
 
     // Start is called before the first frame update
     void Start()
@@ -39,20 +43,23 @@ public class GameController : MonoBehaviour
     public void ModResource(string resourceName, float newValue)
     {
         jsonNode["Resources"][resourceName]["value"] += newValue;
+        savePlayerDatabase();
     }
+
+    // public List<string> GetTools(string tab){
+    //     tabs.Where(t => t.id == tab).Select(n => n.tools);
+    // }
 
 private void playerDbCheckandLoad()
 {
     var fileName = Path.Combine(Application.persistentDataPath, "BADHdb.json");
-    if(!File.Exists(fileName))
+    UnityEngine.Debug.Log(fileName);
+    if(!File.Exists(fileName) || scorchedEarth)
     {
-        Debug.Log("player db does not exist");
-
-        StreamWriter writer = new StreamWriter(fileName, true);
-        writer.WriteLine(defaultDataFile.text);
-        writer.Close();
+        jsonNode = SimpleJSON.JSON.Parse(defaultDataFile.text);
+        savePlayerDatabase();
     }
-        Debug.Log("Load data");
+     //   UnityEngine.Debug.Log("Load data");
 
         StreamReader playerReader = new StreamReader(fileName); 
         var playerdata = playerReader.ReadToEnd();
@@ -67,7 +74,7 @@ private void playerDbCheckandLoad()
         jsonNode = mergeDefaultData(defaultJsonNode, jsonNode);
         jsonNode = deleteExtraneousPlayerData(defaultJsonNode, jsonNode);
         }
-        Debug.Log(jsonNode);  
+      //  UnityEngine.Debug.Log(jsonNode);  
 }
 
 public static JSONNode mergeDefaultData(JSONNode defaultJson, JSONNode playerJson) 
@@ -97,4 +104,13 @@ public static JSONNode deleteExtraneousPlayerData(JSONNode defaultJson, JSONNode
 
     return playerJson;
 }
+public void savePlayerDatabase()
+{
+    var fileName = Path.Combine(Application.persistentDataPath, "BADHdb.json");
+
+    StreamWriter writer = new StreamWriter(fileName, true);
+    writer.WriteLine(jsonNode.ToString());
+    writer.Close(); 
+}
+
 }

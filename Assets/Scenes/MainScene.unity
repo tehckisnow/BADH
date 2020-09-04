@@ -815,8 +815,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 431ab001e6d3aed40ab6cbbc5becc19e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scorchedEarth: 1
   barnTab: {fileID: 1863764454}
-  defaultDataFile: {fileID: 4900000, guid: 68c1b5acc4387f249bd98049985a7a23, type: 3}
+  defaultDataFile: {fileID: 4900000, guid: 58c80d864f0e69d4a971f2735f4f2ec4, type: 3}
 --- !u!4 &704304418
 Transform:
   m_ObjectHideFlags: 0
