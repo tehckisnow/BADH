@@ -4,15 +4,15 @@
     "Resources": {
         "acreage": {
             "display": "Acreage",
-            "value": 1
+            "resourceAmount": 1
         },
         "clout": {
             "display": "Clout",
-            "value": 0
+            "resourceAmount": 0
         },
         "money": {
             "display": "Money",
-            "value": 0
+            "resourceAmount": 0
         }
     },
     "Tabs": {

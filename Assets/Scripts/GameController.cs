@@ -1,4 +1,4 @@
-﻿using System.Security.Cryptography;
+﻿using System.Collections.Specialized;
 using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.IO;
@@ -68,8 +68,8 @@ private void playerDbCheckandLoad()
 
         var defaultJsonNode = SimpleJSON.JSON.Parse(defaultDataFile.text);
         
-        var defaultVersionNum = defaultJsonNode["version"];
-        var playerVersionNum = jsonNode["version"];
+        var defaultVersionNum = defaultJsonNode["Version"];
+        var playerVersionNum = jsonNode["Version"];
         if(defaultVersionNum != playerVersionNum){
         jsonNode = mergeDefaultData(defaultJsonNode, jsonNode);
         jsonNode = deleteExtraneousPlayerData(defaultJsonNode, jsonNode);
@@ -85,6 +85,10 @@ public static JSONNode mergeDefaultData(JSONNode defaultJson, JSONNode playerJso
             playerJson.Add(node.Key, node.Value);
         }else{
             mergeDefaultData(node.Value, playerJson[node.Key]); 
+            if(node.Key != "resourceAmount")
+            {
+            playerJson[node.Key].Value = node.Value;
+            }
         }
     }
 
@@ -108,7 +112,7 @@ public void savePlayerDatabase()
 {
     var fileName = Path.Combine(Application.persistentDataPath, "BADHdb.json");
 
-    StreamWriter writer = new StreamWriter(fileName, true);
+    StreamWriter writer = new StreamWriter(fileName, false);
     writer.WriteLine(jsonNode.ToString());
     writer.Close(); 
 }
