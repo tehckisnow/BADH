@@ -15,7 +15,7 @@ public class TabController : MonoBehaviour
     public Animator buttonAnimator;
     public Tool currentTool;
     public AudioSource sfx;
-    
+
     public Text mainResourceAmountText;
 
     // Start is called before the first frame update
@@ -24,6 +24,7 @@ public class TabController : MonoBehaviour
         titleText.text = titleTextValue;
         mainResourceText.text = mainResourceTextValue + ": ";
         mainResourceAmountText.text = GetResource(mainResourceID).ToString();
+        NewTool("bah");
     }
 
     // Update is called once per frame
@@ -46,7 +47,7 @@ public class TabController : MonoBehaviour
         //buttonAnimator.SetBool("mainButtonReady", false);
         buttonAnimator.Play("beatHorse");
         sfx.Play();
-        gameController.ModResource(mainResourceID, currentTool.damage);
+        gameController.ModResource(mainResourceID, currentTool.CalcMagnitude());
         Debug.Log(gameController.GetResource("clout"));
     }
 
@@ -54,4 +55,19 @@ public class TabController : MonoBehaviour
     {
         currentTool = tool;
     }
+
+    private void NewTool(string toolName)//, string iconFilename)
+    {
+        //!return a gameobject?
+
+        GameObject newTool = new GameObject();
+        newTool.name = toolName;
+        Image upgradeBG = newTool.AddComponent<Image>() as Image;
+        upgradeBG.sprite = Resources.Load<Sprite>("Square");
+        //!why can't I see this object in unity?
+        
+        //Image icon = newTool.AddComponent<Image>();
+        //icon.sprite = Resources.Load<Sprite>(iconFilename);
+    }
+
 }
