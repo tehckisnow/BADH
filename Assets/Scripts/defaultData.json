@@ -1,0 +1,83 @@
+{
+    "Version": 0.1,
+    "Equipped": "fist",
+    "Resources": {
+        "acreage": {
+            "display": "Acreage",
+            "resourceAmount": 1
+        },
+        "clout": {
+            "display": "Clout",
+            "resourceAmount": 0
+        },
+        "money": {
+            "display": "Money",
+            "resourceAmount": 0
+        }
+    },
+    "Tabs": {
+        "barn": {
+            "acquired": true,
+            "Tools": {
+                "fist": {
+                    "display": "Fist",
+                    "frequency": 3,
+                    "magnitude": 1,
+                    "acquired": true,
+                    "available": true,
+                    "Upgrades": {
+                        "brassknuckles": {
+                            "display": "brass knuckles",
+                            "frequency": 1,
+                            "magnitude": 1,
+                            "acquired": false,
+                            "available": true
+                        }
+                    }
+                },
+                "baseballbat": {
+                    "display": "baseball bat",
+                    "frequency": 1,
+                    "magnitude": 3,
+                    "Upgrades": {
+                        "nails": {
+                            "display": "nails",
+                            "frequency": 1,
+                            "magnitude": 1,
+                            "acquired": false,
+                            "available": true
+                        },
+                        "cork": {
+                            "display": "cork",
+                            "frequency": -0.25,
+                            "magnitude": 0,
+                            "acquired": false,
+                            "available": true
+                        }
+                    }
+                },
+                "punchgun": {
+                    "display": "Punch Gun",
+                    "frequency": 5,
+                    "magnitude": 5,
+                    "Upgrades": {
+                        "heavierspring": {
+                            "display": "Heavier Spring",
+                            "frequency": 1,
+                            "magnitude": 1,
+                            "acquired": false,
+                            "available": true
+                        },
+                        "biggerglove": {
+                            "display": "Bigger Glove",
+                            "frequency": 1,
+                            "magnitude": 1,
+                            "acquired": false,
+                            "available": true
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
