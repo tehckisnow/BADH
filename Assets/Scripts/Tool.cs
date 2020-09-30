@@ -7,6 +7,8 @@ public class Tool : MonoBehaviour
 {
     public string toolName = "tool";
     public Image sprite;
+    public bool unlocked = false;
+    public bool acquired = false;
     public float magnitude = 1;
     public float frequency = 1;
     public List<ToolUpgrade> upgrades;

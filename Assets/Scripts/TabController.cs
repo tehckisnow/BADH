@@ -1,10 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class TabController : MonoBehaviour
 {
+    public Canvas canvas;
+    public GameObject damageTextPrefab;
+    public GameObject mainButton;
     public GameController gameController;
     //public reference to ui object
     public Text titleText;
@@ -14,9 +19,12 @@ public class TabController : MonoBehaviour
     public string mainResourceTextValue;
     public Animator buttonAnimator;
     public Tool currentTool;
+    public List<GameObject> tools;
     public AudioSource sfx;
 
     public Text mainResourceAmountText;
+
+    public TMP_Dropdown toolsDropdown;
 
     // Start is called before the first frame update
     void Start()
@@ -24,7 +32,30 @@ public class TabController : MonoBehaviour
         titleText.text = titleTextValue;
         mainResourceText.text = mainResourceTextValue + ": ";
         mainResourceAmountText.text = GetResource(mainResourceID).ToString();
-        NewTool("bah");
+        FillToolsDropdown();
+    }
+
+    //TODO: This needs to be called elsewhere to update the tools in the dropdown
+    //if it is added to Update() then other tools become unselectable
+    //because FillToolsDropdown() resets the value of the dropdown to 0
+    void FillToolsDropdown()
+    {
+        toolsDropdown.ClearOptions();
+        List<string> names = new List<string>();
+        //List<TMP_Dropdown.OptionData>
+
+        foreach(GameObject i in tools)
+        {
+            Tool tool = i.GetComponent<Tool>();
+            //check if tool has been unlocked
+            if(tool.unlocked)
+            {
+                names.Add(i.GetComponent<Tool>().toolName);
+            }
+        }
+
+        toolsDropdown.AddOptions(names);
+        UpdateActiveTool();
     }
 
     // Update is called once per frame
@@ -35,6 +66,9 @@ public class TabController : MonoBehaviour
         //set ui object string text
         mainResourceText.text = mainResourceTextValue + ": ";
         mainResourceAmountText.text = GetResource(mainResourceID).ToString();
+
+        //! should this be called here?
+        //fillToolsDropdown();
     }
 
     float GetResource(string resourceName)
@@ -47,8 +81,11 @@ public class TabController : MonoBehaviour
         //buttonAnimator.SetBool("mainButtonReady", false);
         buttonAnimator.Play("beatHorse");
         sfx.Play();
-        gameController.ModResource(mainResourceID, currentTool.CalcMagnitude());
-        Debug.Log(gameController.GetResource("clout"));
+        float magnitude = currentTool.CalcMagnitude();
+        gameController.ModResource(mainResourceID, magnitude);
+        //damage text
+        GameObject damageTextInstance = Instantiate(damageTextPrefab, mainButton.transform);
+        damageTextInstance.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = magnitude.ToString();
     }
 
     private void SetTool(Tool tool)
@@ -56,18 +93,20 @@ public class TabController : MonoBehaviour
         currentTool = tool;
     }
 
-    private void NewTool(string toolName)//, string iconFilename)
+    public void UpdateActiveTool()
     {
-        //!return a gameobject?
+        //get value of dropdown
+        int val = toolsDropdown.value;
+        //get tool
+        Tool activeTool = tools.ElementAt(val).GetComponent<Tool>();
+        //SetTool()
+        SetTool(activeTool);
+    }
 
-        GameObject newTool = new GameObject();
-        newTool.name = toolName;
-        Image upgradeBG = newTool.AddComponent<Image>() as Image;
-        upgradeBG.sprite = Resources.Load<Sprite>("Square");
-        //!why can't I see this object in unity?
-        
-        //Image icon = newTool.AddComponent<Image>();
-        //icon.sprite = Resources.Load<Sprite>(iconFilename);
+    public void UnlockTool(Tool tool)
+    {
+        tool.unlocked = true;
+        FillToolsDropdown();
     }
 
 }
