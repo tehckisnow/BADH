@@ -21,7 +21,7 @@ public class TabController : MonoBehaviour
     public Tool currentTool;
     public List<GameObject> tools;
     public AudioSource sfx;
-
+    public GameObject upgradesListMarker;
     public Text mainResourceAmountText;
 
     public TMP_Dropdown toolsDropdown;
@@ -43,14 +43,15 @@ public class TabController : MonoBehaviour
         toolsDropdown.ClearOptions();
         List<string> names = new List<string>();
         //List<TMP_Dropdown.OptionData>
-
+        
         foreach(GameObject i in tools)
         {
             Tool tool = i.GetComponent<Tool>();
             //check if tool has been unlocked
             if(tool.unlocked)
             {
-                names.Add(i.GetComponent<Tool>().toolName);
+                string name = "<sprite=" + tool.iconNumber + ">" + i.GetComponent<Tool>().toolName;
+                names.Add(name);
             }
         }
 
@@ -91,6 +92,9 @@ public class TabController : MonoBehaviour
     private void SetTool(Tool tool)
     {
         currentTool = tool;
+        upgradesListMarker.transform.DetachChildren();
+        tool.upgradesUIList.transform.SetParent(upgradesListMarker.transform);
+
     }
 
     public void UpdateActiveTool()
