@@ -40,6 +40,7 @@ public class TabController : MonoBehaviour
     //because FillToolsDropdown() resets the value of the dropdown to 0
     void FillToolsDropdown()
     {
+        int value = toolsDropdown.value;
         toolsDropdown.ClearOptions();
         List<string> names = new List<string>();
         //List<TMP_Dropdown.OptionData>
@@ -57,6 +58,8 @@ public class TabController : MonoBehaviour
 
         toolsDropdown.AddOptions(names);
         UpdateActiveTool();
+        //remember previous value
+        toolsDropdown.value = value;
     }
 
     // Update is called once per frame
