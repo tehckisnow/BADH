@@ -33,6 +33,8 @@ public class TabController : MonoBehaviour
         mainResourceText.text = mainResourceTextValue + ": ";
         mainResourceAmountText.text = GetResource(mainResourceID).ToString();
         FillToolsDropdown();
+        //set starting tool
+        SetTool(tools[0].GetComponent<Tool>());
     }
 
     //TODO: This needs to be called elsewhere to update the tools in the dropdown
@@ -94,10 +96,16 @@ public class TabController : MonoBehaviour
 
     private void SetTool(Tool tool)
     {
+        if(currentTool != null)
+        {
+            currentTool.upgradesUIList.SetActive(false);
+        }
         currentTool = tool;
+        tool.upgradesUIList.SetActive(true);
+        
         upgradesListMarker.transform.DetachChildren();
         tool.upgradesUIList.transform.SetParent(upgradesListMarker.transform);
-
+        tool.upgradesUIList.transform.position = tool.upgradesUIList.transform.parent.transform.position;
     }
 
     public void UpdateActiveTool()

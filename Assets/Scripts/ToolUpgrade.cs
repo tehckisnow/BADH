@@ -32,6 +32,8 @@ public class ToolUpgrade : MonoBehaviour
         purchaseButton.transform.Find("CostText").gameObject.SetActive(false);
         //other indicator (shading?)
         purchaseButton.GetComponent<Image>().color = Color.gray;
+        //!check if cost can be covered
+
         //subtract cost
         gameController.ModResource(resourceCost, -cost);
 
