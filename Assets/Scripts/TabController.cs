@@ -53,7 +53,12 @@ public class TabController : MonoBehaviour
             //check if tool has been unlocked
             if(tool.unlocked)
             {
-                string name = "<sprite=" + tool.iconNumber + ">" + i.GetComponent<Tool>().toolName;
+                string name = "<sprite=" + tool.iconNumber + ">" + tool.toolName;
+                if(!tool.acquired)
+                {
+                    name += " (" + tool.cost + " " + tool.resourceCost + ")";
+                }
+                name += "\n" + tool.statsDisplay;
                 names.Add(name);
             }
         }

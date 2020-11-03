@@ -14,8 +14,8 @@ public class ToolUpgrade : MonoBehaviour
     public Button purchaseButton;
     public GameController gameController;
 
-    public float cost;
-    public string resourceCost;
+    public float cost; //amount of resource spent upon purchase
+    public string resourceCost; //type of resource spent upon purchase
 
     public void Start()
     {

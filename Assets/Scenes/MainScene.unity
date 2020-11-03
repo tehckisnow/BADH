@@ -500,6 +500,9 @@ MonoBehaviour:
   upgrades:
   - {fileID: 740913058}
   upgradesUIList: {fileID: 1195203121}
+  cost: 0
+  resourceCost: 
+  statsDisplay: 
 --- !u!1 &98658694
 GameObject:
   m_ObjectHideFlags: 0
@@ -5592,15 +5595,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4def1a5d6e7b6e2478f703b0227c63de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toolName: Fist
-  iconNumber: 1
+  toolName: tool
+  iconNumber: 0
   unlocked: 1
   acquired: 0
   magnitude: 1
   frequency: 1
-  upgrades:
-  - {fileID: 271420390}
+  upgrades: []
   upgradesUIList: {fileID: 1199074878}
+  cost: 100
+  resourceCost: clout
+  statsDisplay: 'mag: +1'
 --- !u!224 &1441904883
 RectTransform:
   m_ObjectHideFlags: 0
