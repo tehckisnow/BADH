@@ -492,17 +492,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toolName: Baseball Bat
-  iconNumber: 2
+  iconNumber: 0
   unlocked: 1
   acquired: 0
   magnitude: 2
   frequency: 1
-  upgrades:
-  - {fileID: 740913058}
+  upgrades: []
   upgradesUIList: {fileID: 1195203121}
-  cost: 0
-  resourceCost: 
-  statsDisplay: 
+  gameController: {fileID: 704304417}
+  tabController: {fileID: 1863764456}
+  cost: 100
+  resourceCost: clout
+  statsDisplay: 'mag: +1'
 --- !u!1 &98658694
 GameObject:
   m_ObjectHideFlags: 0
@@ -3274,7 +3275,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 431ab001e6d3aed40ab6cbbc5becc19e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scorchedEarth: 0
+  scorchedEarth: 1
   barnTab: {fileID: 1863764454}
   defaultDataFile: {fileID: 4900000, guid: 58c80d864f0e69d4a971f2735f4f2ec4, type: 3}
 --- !u!4 &704304418
@@ -5595,14 +5596,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4def1a5d6e7b6e2478f703b0227c63de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toolName: tool
+  toolName: Fist
   iconNumber: 0
   unlocked: 1
-  acquired: 0
+  acquired: 1
   magnitude: 1
   frequency: 1
   upgrades: []
   upgradesUIList: {fileID: 1199074878}
+  gameController: {fileID: 704304417}
+  tabController: {fileID: 1863764456}
   cost: 100
   resourceCost: clout
   statsDisplay: 'mag: +1'

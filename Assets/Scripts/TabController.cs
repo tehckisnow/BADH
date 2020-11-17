@@ -40,7 +40,7 @@ public class TabController : MonoBehaviour
     //TODO: This needs to be called elsewhere to update the tools in the dropdown
     //if it is added to Update() then other tools become unselectable
     //because FillToolsDropdown() resets the value of the dropdown to 0
-    void FillToolsDropdown()
+    public void FillToolsDropdown()
     {
         int value = toolsDropdown.value;
         toolsDropdown.ClearOptions();
@@ -119,6 +119,11 @@ public class TabController : MonoBehaviour
         int val = toolsDropdown.value;
         //get tool
         Tool activeTool = tools.ElementAt(val).GetComponent<Tool>();
+        //check for purchase first time
+        if(!activeTool.acquired)
+        {
+            activeTool.Purchase();
+        }
         //SetTool()
         SetTool(activeTool);
     }

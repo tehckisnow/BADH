@@ -13,6 +13,8 @@ public class Tool : MonoBehaviour
     public float frequency = 1;
     public List<ToolUpgrade> upgrades;
     public GameObject upgradesUIList;
+    public GameController gameController;
+    public TabController tabController;
 
     public float cost = 100; //amount of resource spent upon purchase
     public string resourceCost = "clout"; //type of resource spent upon purchase
@@ -29,5 +31,15 @@ public class Tool : MonoBehaviour
             }
         }
         return currentMagnitude;
+    }
+
+    public void Purchase()
+    {
+        gameController.ModResource(resourceCost, -cost);
+        //change state to indicate has been purchased
+        this.acquired = true;
+        //call FillToolsDropdown from TabController
+        tabController.FillToolsDropdown();
+
     }
 }
