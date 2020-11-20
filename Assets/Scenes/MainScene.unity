@@ -497,7 +497,10 @@ MonoBehaviour:
   acquired: 0
   magnitude: 2
   frequency: 1
-  upgrades: []
+  upgrades:
+  - {fileID: 740913058}
+  - {fileID: 580038050}
+  - {fileID: 293418664}
   upgradesUIList: {fileID: 1195203121}
   gameController: {fileID: 704304417}
   tabController: {fileID: 1863764456}
@@ -1221,7 +1224,7 @@ MonoBehaviour:
   upgradeName: upgrade
   unlocked: 1
   acquired: 0
-  magnitude: 1
+  magnitude: 3
   frequency: 0
   purchaseButton: {fileID: 673615815}
   gameController: {fileID: 704304417}
@@ -2031,7 +2034,7 @@ MonoBehaviour:
   upgradeName: upgrade
   unlocked: 1
   acquired: 0
-  magnitude: 1
+  magnitude: 3
   frequency: 0
   purchaseButton: {fileID: 962839071}
   gameController: {fileID: 704304417}
@@ -2641,7 +2644,7 @@ MonoBehaviour:
   upgradeName: upgrade
   unlocked: 1
   acquired: 0
-  magnitude: 1
+  magnitude: 2
   frequency: 0
   purchaseButton: {fileID: 671678638}
   gameController: {fileID: 704304417}
@@ -3275,7 +3278,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 431ab001e6d3aed40ab6cbbc5becc19e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scorchedEarth: 1
+  scorchedEarth: 0
   barnTab: {fileID: 1863764454}
   defaultDataFile: {fileID: 4900000, guid: 58c80d864f0e69d4a971f2735f4f2ec4, type: 3}
 --- !u!4 &704304418
@@ -4796,7 +4799,7 @@ MonoBehaviour:
   upgradeName: upgrade
   unlocked: 1
   acquired: 0
-  magnitude: 1
+  magnitude: 2
   frequency: 0
   purchaseButton: {fileID: 851789438}
   gameController: {fileID: 704304417}
@@ -5602,7 +5605,10 @@ MonoBehaviour:
   acquired: 1
   magnitude: 1
   frequency: 1
-  upgrades: []
+  upgrades:
+  - {fileID: 271420390}
+  - {fileID: 1138183044}
+  - {fileID: 195322523}
   upgradesUIList: {fileID: 1199074878}
   gameController: {fileID: 704304417}
   tabController: {fileID: 1863764456}
