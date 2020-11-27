@@ -50,71 +50,80 @@ public class GameController : MonoBehaviour
     //     tabs.Where(t => t.id == tab).Select(n => n.tools);
     // }
 
-private void playerDbCheckandLoad()
-{
-    var fileName = Path.Combine(Application.persistentDataPath, "BADHdb.json");
-    UnityEngine.Debug.Log(fileName);
-    if(!File.Exists(fileName) || scorchedEarth)
+    private void playerDbCheckandLoad()
     {
-        jsonNode = SimpleJSON.JSON.Parse(defaultDataFile.text);
-        savePlayerDatabase();
-    }
-     //   UnityEngine.Debug.Log("Load data");
+        var fileName = Path.Combine(Application.persistentDataPath, "BADHdb.json");
+        UnityEngine.Debug.Log(fileName);
+        if (!File.Exists(fileName) || scorchedEarth)
+        {
+            jsonNode = SimpleJSON.JSON.Parse(defaultDataFile.text);
+            savePlayerDatabase();
+        }
+        //   UnityEngine.Debug.Log("Load data");
 
-        StreamReader playerReader = new StreamReader(fileName); 
+        StreamReader playerReader = new StreamReader(fileName);
         var playerdata = playerReader.ReadToEnd();
         jsonNode = SimpleJSON.JSON.Parse(playerdata);
         playerReader.Close();
 
         var defaultJsonNode = SimpleJSON.JSON.Parse(defaultDataFile.text);
-        
+
         var defaultVersionNum = defaultJsonNode["Version"];
         var playerVersionNum = jsonNode["Version"];
-        if(defaultVersionNum != playerVersionNum){
-        jsonNode = mergeDefaultData(defaultJsonNode, jsonNode);
-        jsonNode = deleteExtraneousPlayerData(defaultJsonNode, jsonNode);
+        if (defaultVersionNum != playerVersionNum)
+        {
+            jsonNode = mergeDefaultData(defaultJsonNode, jsonNode);
+            jsonNode = deleteExtraneousPlayerData(defaultJsonNode, jsonNode);
         }
-      //  UnityEngine.Debug.Log(jsonNode);  
-}
+        //  UnityEngine.Debug.Log(jsonNode);  
+    }
 
-public static JSONNode mergeDefaultData(JSONNode defaultJson, JSONNode playerJson) 
-{
+    public static JSONNode mergeDefaultData(JSONNode defaultJson, JSONNode playerJson)
+    {
 
-    foreach(var node in defaultJson) {
-        if(!playerJson.HasKey(node.Key)){
-            playerJson.Add(node.Key, node.Value);
-        }else{
-            mergeDefaultData(node.Value, playerJson[node.Key]); 
-            if(node.Key != "resourceAmount")
+        foreach (var node in defaultJson)
+        {
+            if (!playerJson.HasKey(node.Key))
             {
-            playerJson[node.Key].Value = node.Value;
+                playerJson.Add(node.Key, node.Value);
+            }
+            else
+            {
+                mergeDefaultData(node.Value, playerJson[node.Key]);
+                if (node.Key != "resourceAmount")
+                {
+                    playerJson[node.Key].Value = node.Value;
+                }
             }
         }
+
+        return playerJson;
     }
 
-    return playerJson;
-}
+    public static JSONNode deleteExtraneousPlayerData(JSONNode defaultJson, JSONNode playerJson)
+    {
 
-public static JSONNode deleteExtraneousPlayerData(JSONNode defaultJson, JSONNode playerJson) 
-{
-
-    foreach(var node in playerJson) {
-        if(!defaultJson.HasKey(node.Key)){
-            playerJson.Remove(node.Key);
-        }else{
-            deleteExtraneousPlayerData(node.Value, playerJson[node.Key]); 
+        foreach (var node in playerJson)
+        {
+            if (!defaultJson.HasKey(node.Key))
+            {
+                playerJson.Remove(node.Key);
+            }
+            else
+            {
+                deleteExtraneousPlayerData(node.Value, playerJson[node.Key]);
+            }
         }
+
+        return playerJson;
     }
+    public void savePlayerDatabase()
+    {
+        var fileName = Path.Combine(Application.persistentDataPath, "BADHdb.json");
 
-    return playerJson;
-}
-public void savePlayerDatabase()
-{
-    var fileName = Path.Combine(Application.persistentDataPath, "BADHdb.json");
-
-    StreamWriter writer = new StreamWriter(fileName, false);
-    writer.WriteLine(jsonNode.ToString());
-    writer.Close(); 
-}
+        StreamWriter writer = new StreamWriter(fileName, false);
+        writer.WriteLine(jsonNode.ToString());
+        writer.Close();
+    }
 
 }

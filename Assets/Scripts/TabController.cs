@@ -25,6 +25,8 @@ public class TabController : MonoBehaviour
     public Text mainResourceAmountText;
 
     public TMP_Dropdown toolsDropdown;
+    public GameObject upgradesUIList;
+    public GameObject upgradePrefab;
 
     // Start is called before the first frame update
     void Start()
@@ -46,15 +48,15 @@ public class TabController : MonoBehaviour
         toolsDropdown.ClearOptions();
         List<string> names = new List<string>();
         //List<TMP_Dropdown.OptionData>
-        
-        foreach(GameObject i in tools)
+
+        foreach (GameObject i in tools)
         {
             Tool tool = i.GetComponent<Tool>();
             //check if tool has been unlocked
-            if(tool.unlocked)
+            if (tool.unlocked)
             {
                 string name = "<sprite=" + tool.iconNumber + ">" + tool.toolName;
-                if(!tool.acquired)
+                if (!tool.acquired)
                 {
                     name += " (" + tool.cost + " " + tool.resourceCost + ")";
                 }
@@ -92,25 +94,42 @@ public class TabController : MonoBehaviour
         //buttonAnimator.SetBool("mainButtonReady", false);
         buttonAnimator.Play("beatHorse");
         sfx.Play();
-        float magnitude = currentTool.CalcMagnitude();
+        float magnitude = CalcToolMagnitude(currentTool);
         gameController.ModResource(mainResourceID, magnitude);
         //damage text
         GameObject damageTextInstance = Instantiate(damageTextPrefab, mainButton.transform);
         damageTextInstance.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = magnitude.ToString();
     }
 
+    #region Tools
     private void SetTool(Tool tool)
     {
-        if(currentTool != null)
-        {
-            currentTool.upgradesUIList.SetActive(false);
-        }
+        // if (currentTool == null)
+        // {
+        //     upgradesUIList.SetActive(false);
+        // }
         currentTool = tool;
-        tool.upgradesUIList.SetActive(true);
-        
-        upgradesListMarker.transform.DetachChildren();
-        tool.upgradesUIList.transform.SetParent(upgradesListMarker.transform);
-        tool.upgradesUIList.transform.position = tool.upgradesUIList.transform.parent.transform.position;
+
+        PopulateUpgradeList(tool.upgrades);
+    }
+
+    public void PopulateUpgradeList(List<ToolUpgrade> upgrades)
+    {
+
+        var gridContent = upgradesUIList.transform.Find("GridContent").transform;
+        foreach (Transform child in gridContent)
+        {
+            Destroy(child);
+        }
+
+        foreach (var upgrade in upgrades)
+        {
+            GameObject newUpgrade = (GameObject)Instantiate(upgradePrefab, gridContent);
+            UnityEngine.Events.UnityAction action = () => { this.PurchaseUpgrade(upgrade); };
+            newUpgrade.transform.Find("UpgradeButton").GetComponent<Button>().onClick.AddListener(action);
+            newUpgrade.gameObject.SetActive(true);
+            //newUpgrade.transform.SetParent(gridContent);
+        }
     }
 
     public void UpdateActiveTool()
@@ -120,9 +139,9 @@ public class TabController : MonoBehaviour
         //get tool
         Tool activeTool = tools.ElementAt(val).GetComponent<Tool>();
         //check for purchase first time
-        if(!activeTool.acquired)
+        if (!activeTool.acquired)
         {
-            activeTool.Purchase();
+            PurchaseTool(activeTool);
         }
         //SetTool()
         SetTool(activeTool);
@@ -133,5 +152,49 @@ public class TabController : MonoBehaviour
         tool.unlocked = true;
         FillToolsDropdown();
     }
+
+    public float CalcToolMagnitude(Tool Tool)
+    {
+        float currentMagnitude = Tool.magnitude;
+        foreach (ToolUpgrade upgrade in Tool.upgrades)
+        {
+            if (upgrade.acquired)
+            {
+                currentMagnitude += upgrade.magnitude;
+            }
+        }
+        return currentMagnitude;
+    }
+
+    public void PurchaseTool(Tool tool)
+    {
+        gameController.ModResource(tool.resourceCost, -tool.cost);
+        //change state to indicate has been purchased
+        tool.acquired = true;
+        //call FillToolsDropdown from TabController
+        FillToolsDropdown();
+
+    }
+    #endregion Tools
+
+    #region Upgrades
+    public void PurchaseUpgrade(ToolUpgrade upgrade)
+    {
+        //disable button
+        upgrade.purchaseButton.interactable = false;
+        //subtract cost
+        gameController.ModResource(upgrade.resourceCost, -upgrade.cost);
+        //toggle acquired
+        upgrade.acquired = true;
+        //remove price
+        upgrade.purchaseButton.transform.Find("CostText").gameObject.SetActive(false);
+        //other indicator (shading?)
+        upgrade.purchaseButton.GetComponent<Image>().color = Color.gray;
+        //!check if cost can be covered
+
+
+    }
+
+    #endregion Upgrades
 
 }
