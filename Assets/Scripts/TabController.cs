@@ -117,10 +117,10 @@ public class TabController : MonoBehaviour
     {
 
         var gridContent = upgradesUIList.transform.Find("GridContent").transform;
-        foreach (Transform child in gridContent)
-        {
-            Destroy(child);
-        }
+        // foreach (Transform child in gridContent)
+        // {
+        //     Destroy(child);
+        // }
 
         foreach (var upgrade in upgrades)
         {
