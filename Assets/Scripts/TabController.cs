@@ -104,31 +104,35 @@ public class TabController : MonoBehaviour
     #region Tools
     private void SetTool(Tool tool)
     {
-        // if (currentTool == null)
-        // {
-        //     upgradesUIList.SetActive(false);
-        // }
-        currentTool = tool;
-
         PopulateUpgradeList(tool.upgrades);
+        currentTool = tool;
     }
 
     public void PopulateUpgradeList(List<ToolUpgrade> upgrades)
     {
 
         var gridContent = upgradesUIList.transform.Find("GridContent").transform;
-        // foreach (Transform child in gridContent)
-        // {
-        //     Destroy(child);
-        // }
+        //foreach (Transform child in gridContent)
+        for(int i = gridContent.childCount - 1; i >= 0; --i)
+        {
+            //Destroy(child.gameObject);
+            Transform currentChild = gridContent.GetChild(i);
+            currentChild.SetParent(currentTool.transform);
+            //child.SetParent(currentTool.transform);
+            //child.gameObject.SetActive(false);
+            currentChild.gameObject.SetActive(false);
+
+        }
 
         foreach (var upgrade in upgrades)
         {
-            GameObject newUpgrade = (GameObject)Instantiate(upgradePrefab, gridContent);
+            //GameObject newUpgrade = (GameObject)Instantiate(upgradePrefab, gridContent);
+            GameObject newUpgrade = upgrade.gameObject;
             UnityEngine.Events.UnityAction action = () => { this.PurchaseUpgrade(upgrade); };
-            newUpgrade.transform.Find("UpgradeButton").GetComponent<Button>().onClick.AddListener(action);
+            //newUpgrade.transform.Find("UpgradeButton").
+            upgrade.gameObject.GetComponent<Button>().onClick.AddListener(action);
             newUpgrade.gameObject.SetActive(true);
-            //newUpgrade.transform.SetParent(gridContent);
+            newUpgrade.transform.SetParent(gridContent);
         }
     }
 
