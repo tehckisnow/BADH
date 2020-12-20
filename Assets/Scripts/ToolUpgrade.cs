@@ -7,6 +7,8 @@ using TMPro;
 //[Serializable]
 public class ToolUpgrade : MonoBehaviour
 {
+
+
     public string upgradeName = "upgrade";
     public bool unlocked = false;
     public bool acquired = false;
