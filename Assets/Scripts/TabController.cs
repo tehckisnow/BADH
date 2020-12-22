@@ -19,6 +19,7 @@ public class TabController : MonoBehaviour
     public string mainResourceTextValue;
     public Animator buttonAnimator;
     public Tool currentTool;
+    private int currentToolVal = 0;
     public List<GameObject> tools;
     public AudioSource sfx;
     public GameObject upgradesListMarker;
@@ -37,6 +38,15 @@ public class TabController : MonoBehaviour
         FillToolsDropdown();
         //set starting tool
         SetTool(tools[0].GetComponent<Tool>());
+        //InitUpgrades()
+        foreach(GameObject currentTool in tools)
+        {
+            foreach(ToolUpgrade currentUpgrade in currentTool.GetComponent<Tool>().upgrades)
+            {
+                UnityEngine.Events.UnityAction action = () => { this.PurchaseUpgrade(currentUpgrade); };
+                currentUpgrade.gameObject.GetComponent<Button>().onClick.AddListener(action);
+            }
+        }
     }
 
     //TODO: This needs to be called elsewhere to update the tools in the dropdown
@@ -95,6 +105,7 @@ public class TabController : MonoBehaviour
         buttonAnimator.Play("beatHorse");
         sfx.Play();
         float magnitude = CalcToolMagnitude(currentTool);
+        //! ADD CHECK BELOW?
         gameController.ModResource(mainResourceID, magnitude);
         //damage text
         GameObject damageTextInstance = Instantiate(damageTextPrefab, mainButton.transform);
@@ -106,6 +117,7 @@ public class TabController : MonoBehaviour
     {
         PopulateUpgradeList(tool.upgrades);
         currentTool = tool;
+        currentToolVal = toolsDropdown.value;
     }
 
     public void PopulateUpgradeList(List<ToolUpgrade> upgrades)
@@ -128,9 +140,6 @@ public class TabController : MonoBehaviour
         {
             //GameObject newUpgrade = (GameObject)Instantiate(upgradePrefab, gridContent);
             GameObject newUpgrade = upgrade.gameObject;
-            UnityEngine.Events.UnityAction action = () => { this.PurchaseUpgrade(upgrade); };
-            //newUpgrade.transform.Find("UpgradeButton").
-            upgrade.gameObject.GetComponent<Button>().onClick.AddListener(action);
             newUpgrade.gameObject.SetActive(true);
             newUpgrade.transform.SetParent(gridContent);
         }
@@ -145,9 +154,16 @@ public class TabController : MonoBehaviour
         //check for purchase first time
         if (!activeTool.acquired)
         {
-            PurchaseTool(activeTool);
+            if(PurchaseTool(activeTool))
+            {
+                SetTool(activeTool);
+            }
+            else
+            {
+                toolsDropdown.value = currentToolVal;
+            }
         }
-        //SetTool()
+        else
         SetTool(activeTool);
     }
 
@@ -170,14 +186,19 @@ public class TabController : MonoBehaviour
         return currentMagnitude;
     }
 
-    public void PurchaseTool(Tool tool)
+    public bool PurchaseTool(Tool tool)
     {
-        gameController.ModResource(tool.resourceCost, -tool.cost);
-        //change state to indicate has been purchased
-        tool.acquired = true;
-        //call FillToolsDropdown from TabController
-        FillToolsDropdown();
+        bool ret = false;
 
+        if(gameController.ModResource(tool.resourceCost, -tool.cost))
+        {
+            //change state to indicate has been purchased
+            tool.acquired = true;
+            //call FillToolsDropdown from TabController
+            FillToolsDropdown();
+            ret = true;
+        }
+        return ret;
     }
     #endregion Tools
 
@@ -187,15 +208,20 @@ public class TabController : MonoBehaviour
         //disable button
         upgrade.purchaseButton.interactable = false;
         //subtract cost
-        gameController.ModResource(upgrade.resourceCost, -upgrade.cost);
-        //toggle acquired
-        upgrade.acquired = true;
-        //remove price
-        upgrade.purchaseButton.transform.Find("CostText").gameObject.SetActive(false);
-        //other indicator (shading?)
-        upgrade.purchaseButton.GetComponent<Image>().color = Color.gray;
-        //!check if cost can be covered
-
+        if(gameController.ModResource(upgrade.resourceCost, -upgrade.cost))
+        {
+            //toggle acquired
+            upgrade.acquired = true;
+            //remove price
+            upgrade.purchaseButton.transform.Find("CostText").gameObject.SetActive(false);
+            //other indicator (shading?)
+            upgrade.purchaseButton.GetComponent<Image>().color = Color.gray;
+            //!check if cost can be covered
+        }
+        else
+        {
+            upgrade.purchaseButton.interactable = true;
+        }
 
     }
 

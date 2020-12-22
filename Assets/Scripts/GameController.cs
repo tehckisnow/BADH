@@ -40,10 +40,27 @@ public class GameController : MonoBehaviour
         jsonNode["Resources"][resourceName]["value"] = newValue;
     }
 
-    public void ModResource(string resourceName, float newValue)
+    public bool ModResource(string resourceName, float newValue)
     {
-        jsonNode["Resources"][resourceName]["value"] += newValue;
-        savePlayerDatabase();
+        bool ret = false;
+        //if newValue is negative, check resource amount
+        if(newValue < 0)
+        {
+            if(GetResource(resourceName) >= -newValue)
+            {
+                jsonNode["Resources"][resourceName]["value"] += newValue;
+                savePlayerDatabase();
+                ret = true;
+            }
+        }
+        else
+        //if newValue is positive, no need to check resource amount
+        {
+            jsonNode["Resources"][resourceName]["value"] += newValue;
+            savePlayerDatabase();
+            ret = true;
+        }
+        return ret;
     }
 
     // public List<string> GetTools(string tab){
